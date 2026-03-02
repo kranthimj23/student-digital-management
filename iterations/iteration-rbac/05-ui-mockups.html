@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CEC Student Digital Platform - UI Mockups</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            sidebar: 'hsl(222.2, 84%, 4.9%)',
+            'sidebar-fg': 'hsl(210, 40%, 98%)',
+            accent: 'hsl(217.2, 91.2%, 59.8%)',
+            destructive: 'hsl(0, 84.2%, 60.2%)',
+            warning: 'hsl(38, 92%, 50%)',
+            success: 'hsl(142.1, 76.2%, 36.3%)',
+            muted: 'hsl(210, 40%, 96.1%)',
+            border: 'hsl(214.3, 31.8%, 91.4%)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .nav-item { transition: background-color 0.15s, color 0.15s; }
+    .nav-item:hover { background-color: rgba(255,255,255,0.1); }
+    .nav-item.active { background-color: rgba(255,255,255,0.15); color: white; }
+    .badge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: 500; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-gray { background: #f1f5f9; color: #475569; }
+    .badge-admin { background: #fee2e2; color: #991b1b; }
+    .badge-faculty { background: #dbeafe; color: #1e40af; }
+    .badge-student { background: #dcfce7; color: #166534; }
+    .card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: none; }
+    .btn-primary { background: hsl(222.2, 84%, 4.9%); color: white; }
+    .btn-primary:hover { background: hsl(222.2, 84%, 12%); }
+    .btn-secondary { background: #f1f5f9; color: #0f172a; border: 1px solid #e2e8f0; }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-destructive { background: hsl(0, 84.2%, 60.2%); color: white; }
+    .btn-destructive:hover { background: hsl(0, 84.2%, 50%); }
+    .btn-outline { background: white; color: #0f172a; border: 1px solid #e2e8f0; }
+    .btn-outline:hover { background: #f8fafc; }
+    .btn-ghost { background: transparent; color: #64748b; }
+    .btn-ghost:hover { background: #f1f5f9; }
+    .input { width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.15s; }
+    .input:focus { border-color: hsl(217.2, 91.2%, 59.8%); box-shadow: 0 0 0 2px hsla(217.2, 91.2%, 59.8%, 0.15); }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; }
+    td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid #f1f5f9; }
+    tr:hover td { background: #f8fafc; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: white; border-radius: 12px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
+    .stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; }
+    .stat-card .stat-value { font-size: 28px; font-weight: 700; color: #0f172a; }
+    .stat-card .stat-label { font-size: 13px; color: #64748b; }
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); position: fixed; z-index: 40; }
+      .sidebar.open { transform: translateX(0); }
+      .main-content { margin-left: 0 !important; }
+    }
+  </style>
+</head>
+<body class="h-full bg-gray-50 text-slate-900">
+
+<!-- ==================== SCREEN 0: Login Page ==================== -->
+<section id="screen-login" class="screen active min-h-screen flex items-center justify-center bg-slate-100">
+  <div class="w-full max-w-md mx-4">
+    <div class="card p-0 shadow-lg">
+      <div class="p-8 text-center border-b border-slate-100">
+        <div class="w-14 h-14 bg-sidebar rounded-xl flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="graduation-cap" class="w-8 h-8 text-white"></i>
+        </div>
+        <h1 class="text-2xl font-bold mb-1">CEC Student Digital Platform</h1>
+        <p class="text-sm text-slate-500">City Engineering College, Bengaluru</p>
+        <p class="text-sm text-slate-400 mt-2">Sign in to your account</p>
+      </div>
+      <div class="p-8 space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+          <input type="email" class="input" placeholder="you@cec.edu.in" value="admin@cec.edu.in">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
+          <div class="relative">
+            <input type="password" class="input pr-16" value="••••••••">
+            <button class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-slate-400 hover:text-slate-600">Show</button>
+          </div>
+        </div>
+        <div id="loginError" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm p-3 rounded-md">
+          Invalid credentials. Please try again.
+        </div>
+        <button class="btn btn-primary w-full justify-center py-2.5" onclick="showRole('admin')">
+          Sign In
+        </button>
+      </div>
+      <div class="px-8 pb-6 flex gap-2 justify-center">
+        <button class="text-xs text-accent hover:underline" onclick="showRole('admin')">Demo: Admin</button>
+        <span class="text-xs text-slate-300">|</span>
+        <button class="text-xs text-accent hover:underline" onclick="showRole('faculty')">Demo: Faculty</button>
+        <span class="text-xs text-slate-300">|</span>
+        <button class="text-xs text-accent hover:underline" onclick="showRole('student')">Demo: Student</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== APP SHELL (Header + Sidebar + Content) ==================== -->
+<div id="appShell" style="display:none;">
+
+<!-- Header -->
+<header class="fixed top-0 left-0 right-0 h-14 bg-sidebar text-sidebar-fg border-b border-slate-700 flex items-center justify-between px-4 z-50">
+  <div class="flex items-center gap-3">
+    <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded hover:bg-white/10">
+      <i data-lucide="menu" class="w-5 h-5"></i>
+    </button>
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
+        <i data-lucide="graduation-cap" class="w-5 h-5 text-white"></i>
+      </div>
+      <span class="font-semibold text-lg">CEC Student</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-3">
+    <span id="headerUserName" class="text-sm text-slate-300">CEC Admin</span>
+    <span id="headerRoleBadge" class="badge badge-admin text-xs">Admin</span>
+    <div id="headerAvatar" class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-semibold text-white">CA</div>
+    <button class="text-sm text-slate-400 hover:text-white" onclick="logout()">
+      <i data-lucide="log-out" class="w-4 h-4"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar fixed top-14 left-0 bottom-0 w-64 bg-sidebar text-sidebar-fg border-r border-slate-700 overflow-y-auto z-40">
+  <nav class="py-4">
+    <!-- Admin Nav -->
+    <div id="nav-admin" class="px-3 mb-2" style="display:none;">
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">Administration</p>
+      <a onclick="showScreen('admin-dashboard')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer active" data-screen="admin-dashboard">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+      </a>
+      <a onclick="showScreen('users')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="users">
+        <i data-lucide="users" class="w-4 h-4"></i> Users
+      </a>
+      <a onclick="showScreen('departments')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="departments">
+        <i data-lucide="building-2" class="w-4 h-4"></i> Departments
+      </a>
+      <a onclick="showScreen('assignments')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer" data-screen="assignments">
+        <i data-lucide="user-check" class="w-4 h-4"></i> Faculty Assignments
+      </a>
+    </div>
+
+    <!-- Faculty Nav -->
+    <div id="nav-faculty" class="px-3 mb-2" style="display:none;">
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">Faculty</p>
+      <a onclick="showScreen('faculty-dashboard')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer active" data-screen="faculty-dashboard">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+      </a>
+      <a class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-500 cursor-not-allowed">
+        <i data-lucide="clipboard-list" class="w-4 h-4"></i> Attendance <span class="text-xs text-slate-600 ml-auto">Soon</span>
+      </a>
+      <a class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-500 cursor-not-allowed">
+        <i data-lucide="file-text" class="w-4 h-4"></i> Marks <span class="text-xs text-slate-600 ml-auto">Soon</span>
+      </a>
+      <a class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-500 cursor-not-allowed">
+        <i data-lucide="megaphone" class="w-4 h-4"></i> Announcements <span class="text-xs text-slate-600 ml-auto">Soon</span>
+      </a>
+    </div>
+
+    <!-- Student Nav -->
+    <div id="nav-student" class="px-3 mb-2" style="display:none;">
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2">Student</p>
+      <a onclick="showScreen('student-dashboard')" class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 cursor-pointer active" data-screen="student-dashboard">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+      </a>
+      <a class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-500 cursor-not-allowed">
+        <i data-lucide="clipboard-list" class="w-4 h-4"></i> Attendance <span class="text-xs text-slate-600 ml-auto">Soon</span>
+      </a>
+      <a class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-500 cursor-not-allowed">
+        <i data-lucide="file-text" class="w-4 h-4"></i> Marks <span class="text-xs text-slate-600 ml-auto">Soon</span>
+      </a>
+      <a class="nav-item flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-500 cursor-not-allowed">
+        <i data-lucide="indian-rupee" class="w-4 h-4"></i> Fees <span class="text-xs text-slate-600 ml-auto">Soon</span>
+      </a>
+    </div>
+
+    <div class="border-t border-slate-700 my-3"></div>
+    <div class="px-3">
+      <div class="px-3 py-3">
+        <p id="sidebarUserName" class="text-sm font-medium text-white">CEC Admin</p>
+        <p id="sidebarUserEmail" class="text-xs text-slate-400">admin@cec.edu.in</p>
+      </div>
+    </div>
+  </nav>
+</aside>
+
+<!-- Main Content -->
+<main id="mainContent" class="main-content ml-64 mt-14 min-h-screen">
+
+<!-- ==================== SCREEN 1: Admin Dashboard ==================== -->
+<section id="screen-admin-dashboard" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+    <span>Admin</span> <span>/</span> <span class="text-slate-900">Dashboard</span>
+  </div>
+  <h1 class="text-3xl font-bold tracking-tight mb-6">Dashboard</h1>
+
+  <!-- Stat Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+    <div class="stat-card">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
+          <i data-lucide="users" class="w-5 h-5 text-green-600"></i>
+        </div>
+        <div class="stat-label">Total Students</div>
+      </div>
+      <div class="stat-value">1,247</div>
+      <div class="text-xs text-green-600 mt-1">+23 this semester</div>
+    </div>
+    <div class="stat-card">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+          <i data-lucide="user-check" class="w-5 h-5 text-blue-600"></i>
+        </div>
+        <div class="stat-label">Total Faculty</div>
+      </div>
+      <div class="stat-value">87</div>
+      <div class="text-xs text-blue-600 mt-1">5 new this year</div>
+    </div>
+    <div class="stat-card">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center">
+          <i data-lucide="building-2" class="w-5 h-5 text-purple-600"></i>
+        </div>
+        <div class="stat-label">Departments</div>
+      </div>
+      <div class="stat-value">8</div>
+      <div class="text-xs text-slate-500 mt-1">42 active sections</div>
+    </div>
+    <div class="stat-card">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
+          <i data-lucide="shield-check" class="w-5 h-5 text-amber-600"></i>
+        </div>
+        <div class="stat-label">Active Users</div>
+      </div>
+      <div class="stat-value">1,329</div>
+      <div class="text-xs text-red-500 mt-1">5 inactive accounts</div>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="card p-5">
+    <h2 class="text-lg font-semibold mb-4">Recent Activity</h2>
+    <div class="space-y-4">
+      <div class="flex items-center gap-4 py-2">
+        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center"><i data-lucide="user-plus" class="w-4 h-4 text-green-600"></i></div>
+        <div class="flex-1">
+          <p class="text-sm"><span class="font-medium">Admin</span> imported 48 students via CSV</p>
+          <p class="text-xs text-slate-400">2 hours ago</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 py-2">
+        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center"><i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i></div>
+        <div class="flex-1">
+          <p class="text-sm"><span class="font-medium">Admin</span> assigned Dr. Ramesh to CSE-3A (Data Structures)</p>
+          <p class="text-xs text-slate-400">3 hours ago</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 py-2">
+        <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center"><i data-lucide="building-2" class="w-4 h-4 text-purple-600"></i></div>
+        <div class="flex-1">
+          <p class="text-sm"><span class="font-medium">Admin</span> created section 5A under CSE department</p>
+          <p class="text-xs text-slate-400">5 hours ago</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 py-2">
+        <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center"><i data-lucide="key-round" class="w-4 h-4 text-amber-600"></i></div>
+        <div class="flex-1">
+          <p class="text-sm"><span class="font-medium">Admin</span> reset password for priya@cec.edu.in</p>
+          <p class="text-xs text-slate-400">1 day ago</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 2: User Management ==================== -->
+<section id="screen-users" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+    <span>Admin</span> <span>/</span> <span class="text-slate-900">Users</span>
+  </div>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold tracking-tight">Users</h1>
+    <div class="flex gap-2">
+      <button class="btn btn-secondary" onclick="toggleModal('importModal')">
+        <i data-lucide="upload" class="w-4 h-4"></i> Bulk Import
+      </button>
+      <button class="btn btn-primary" onclick="toggleModal('createUserModal')">
+        <i data-lucide="plus" class="w-4 h-4"></i> Create User
+      </button>
+    </div>
+  </div>
+  <div class="flex flex-col sm:flex-row gap-3 mb-5">
+    <div class="flex-1">
+      <input type="search" class="input" placeholder="Search by name, email, or USN...">
+    </div>
+    <select class="input" style="width:auto">
+      <option>All Roles</option><option>Admin</option><option>Faculty</option><option>Student</option>
+    </select>
+    <select class="input" style="width:auto">
+      <option>All Status</option><option>Active</option><option>Inactive</option>
+    </select>
+  </div>
+  <p class="text-sm text-slate-500 mb-3">Showing 7 of 1,334 users</p>
+
+  <div class="card overflow-hidden">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>USN / Employee ID</th>
+          <th>Dept</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="font-medium">CEC Admin</td>
+          <td class="text-slate-500">admin@cec.edu.in</td>
+          <td class="text-slate-400">—</td>
+          <td class="text-slate-400">—</td>
+          <td><span class="badge badge-admin">Admin</span></td>
+          <td><span class="badge badge-green">Active</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded">Edit</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">Dr. Ramesh Kumar</td>
+          <td class="text-slate-500">ramesh@cec.edu.in</td>
+          <td class="font-mono text-sm">CEC-F-001</td>
+          <td>CSE</td>
+          <td><span class="badge badge-faculty">Faculty</span></td>
+          <td><span class="badge badge-green">Active</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded">Edit</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">Prof. Sunita Rao</td>
+          <td class="text-slate-500">sunita@cec.edu.in</td>
+          <td class="font-mono text-sm">CEC-F-002</td>
+          <td>CSE</td>
+          <td><span class="badge badge-faculty">Faculty</span></td>
+          <td><span class="badge badge-green">Active</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded">Edit</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">Prof. Anil Kumar</td>
+          <td class="text-slate-500">anil@cec.edu.in</td>
+          <td class="font-mono text-sm">CEC-F-003</td>
+          <td>ISE</td>
+          <td><span class="badge badge-faculty">Faculty</span></td>
+          <td><span class="badge badge-green">Active</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded">Edit</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">Rahul Sharma</td>
+          <td class="text-slate-500">rahul@cec.edu.in</td>
+          <td class="font-mono text-sm">1CG21CS001</td>
+          <td>CSE</td>
+          <td><span class="badge badge-student">Student</span></td>
+          <td><span class="badge badge-green">Active</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded">Edit</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">Priya Patel</td>
+          <td class="text-slate-500">priya@cec.edu.in</td>
+          <td class="font-mono text-sm">1CG21CS002</td>
+          <td>CSE</td>
+          <td><span class="badge badge-student">Student</span></td>
+          <td><span class="badge badge-green">Active</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded">Edit</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium text-slate-400">Inactive User</td>
+          <td class="text-slate-400">inactive@cec.edu.in</td>
+          <td class="font-mono text-sm text-slate-400">1CG21CS099</td>
+          <td class="text-slate-400">CSE</td>
+          <td><span class="badge badge-student">Student</span></td>
+          <td><span class="badge badge-red">Inactive</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded">Edit</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex items-center justify-between mt-4">
+    <p class="text-sm text-slate-500">Page 1 of 54</p>
+    <div class="flex gap-1">
+      <button class="btn btn-outline text-sm px-3 py-1" disabled>&lt; Prev</button>
+      <button class="btn btn-primary text-sm px-3 py-1">1</button>
+      <button class="btn btn-outline text-sm px-3 py-1">2</button>
+      <button class="btn btn-outline text-sm px-3 py-1">3</button>
+      <button class="btn btn-outline text-sm px-3 py-1">Next &gt;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 3: Department Management ==================== -->
+<section id="screen-departments" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+    <span>Admin</span> <span>/</span> <span class="text-slate-900">Departments</span>
+  </div>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold tracking-tight">Departments</h1>
+    <button class="btn btn-primary" onclick="toggleModal('createDeptModal')">
+      <i data-lucide="plus" class="w-4 h-4"></i> New Department
+    </button>
+  </div>
+  <p class="text-sm text-slate-500 mb-4">8 departments</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- Dept 1 -->
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer" onclick="showScreen('dept-detail')">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold text-lg">CSE</h3>
+          <p class="text-sm text-slate-500">Computer Science and Engineering</p>
+        </div>
+        <span class="badge badge-blue">Active</span>
+      </div>
+      <div class="flex gap-4 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 6 Sections</span>
+        <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 12 Faculty</span>
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 248 Students</span>
+      </div>
+    </div>
+    <!-- Dept 2 -->
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold text-lg">ISE</h3>
+          <p class="text-sm text-slate-500">Information Science and Engineering</p>
+        </div>
+        <span class="badge badge-blue">Active</span>
+      </div>
+      <div class="flex gap-4 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 4 Sections</span>
+        <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 10 Faculty</span>
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 186 Students</span>
+      </div>
+    </div>
+    <!-- Dept 3 -->
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold text-lg">ECE</h3>
+          <p class="text-sm text-slate-500">Electronics and Communication Engg</p>
+        </div>
+        <span class="badge badge-blue">Active</span>
+      </div>
+      <div class="flex gap-4 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 5 Sections</span>
+        <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 11 Faculty</span>
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 210 Students</span>
+      </div>
+    </div>
+    <!-- Dept 4 -->
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold text-lg">EEE</h3>
+          <p class="text-sm text-slate-500">Electrical and Electronics Engg</p>
+        </div>
+        <span class="badge badge-blue">Active</span>
+      </div>
+      <div class="flex gap-4 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 4 Sections</span>
+        <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 9 Faculty</span>
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 142 Students</span>
+      </div>
+    </div>
+    <!-- Dept 5 -->
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold text-lg">ME</h3>
+          <p class="text-sm text-slate-500">Mechanical Engineering</p>
+        </div>
+        <span class="badge badge-blue">Active</span>
+      </div>
+      <div class="flex gap-4 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 5 Sections</span>
+        <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 11 Faculty</span>
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 178 Students</span>
+      </div>
+    </div>
+    <!-- Dept 6 -->
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold text-lg">CE</h3>
+          <p class="text-sm text-slate-500">Civil Engineering</p>
+        </div>
+        <span class="badge badge-blue">Active</span>
+      </div>
+      <div class="flex gap-4 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 4 Sections</span>
+        <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 8 Faculty</span>
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 96 Students</span>
+      </div>
+    </div>
+    <!-- Dept 7 -->
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold text-lg">AIML</h3>
+          <p class="text-sm text-slate-500">AI and Machine Learning</p>
+        </div>
+        <span class="badge badge-blue">Active</span>
+      </div>
+      <div class="flex gap-4 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 4 Sections</span>
+        <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 8 Faculty</span>
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 120 Students</span>
+      </div>
+    </div>
+    <!-- Dept 8 -->
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold text-lg">MBA</h3>
+          <p class="text-sm text-slate-500">Master of Business Administration</p>
+        </div>
+        <span class="badge badge-blue">Active</span>
+      </div>
+      <div class="flex gap-4 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 2 Sections</span>
+        <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 6 Faculty</span>
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 67 Students</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 3b: Department Detail (CSE) ==================== -->
+<section id="screen-dept-detail" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+    <a onclick="showScreen('departments')" class="hover:text-accent cursor-pointer">Departments</a> <span>/</span> <span class="text-slate-900">CSE</span>
+  </div>
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">Computer Science and Engineering</h1>
+      <p class="text-sm text-slate-500 mt-1">Department Code: <span class="font-mono font-medium">CSE</span></p>
+    </div>
+    <button class="btn btn-primary" onclick="toggleModal('createSectionModal')">
+      <i data-lucide="plus" class="w-4 h-4"></i> Add Section
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    <div class="stat-card">
+      <div class="stat-label">Sections</div>
+      <div class="stat-value">6</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Faculty</div>
+      <div class="stat-value">12</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Students</div>
+      <div class="stat-value">248</div>
+    </div>
+  </div>
+
+  <div class="card overflow-hidden">
+    <div class="px-5 py-3 border-b font-semibold text-sm text-slate-700">Sections</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>Semester</th>
+          <th>Academic Year</th>
+          <th>Students</th>
+          <th>Faculty Assigned</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="font-medium">A</td>
+          <td>3rd Semester</td>
+          <td>2025-26</td>
+          <td>64</td>
+          <td><span class="text-sm">Dr. Ramesh Kumar (Data Structures)</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Delete</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">B</td>
+          <td>3rd Semester</td>
+          <td>2025-26</td>
+          <td>62</td>
+          <td><span class="text-sm">Dr. Ramesh Kumar (Data Structures)</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Delete</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">A</td>
+          <td>5th Semester</td>
+          <td>2025-26</td>
+          <td>58</td>
+          <td><span class="text-sm">Prof. Sunita Rao (DBMS)</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Delete</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">B</td>
+          <td>5th Semester</td>
+          <td>2025-26</td>
+          <td>56</td>
+          <td><span class="text-sm text-slate-400">Unassigned</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Delete</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">A</td>
+          <td>7th Semester</td>
+          <td>2025-26</td>
+          <td>45</td>
+          <td><span class="text-sm text-slate-400">Unassigned</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Delete</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">B</td>
+          <td>7th Semester</td>
+          <td>2025-26</td>
+          <td>43</td>
+          <td><span class="text-sm text-slate-400">Unassigned</span></td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 4: Faculty Assignments ==================== -->
+<section id="screen-assignments" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+    <span>Admin</span> <span>/</span> <span class="text-slate-900">Faculty Assignments</span>
+  </div>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold tracking-tight">Faculty Assignments</h1>
+    <button class="btn btn-primary" onclick="toggleModal('createAssignmentModal')">
+      <i data-lucide="plus" class="w-4 h-4"></i> New Assignment
+    </button>
+  </div>
+  <p class="text-sm text-slate-500 mb-4">4 active assignments</p>
+
+  <div class="card overflow-hidden">
+    <table>
+      <thead>
+        <tr>
+          <th>Faculty</th>
+          <th>Department</th>
+          <th>Section</th>
+          <th>Subject</th>
+          <th>Assigned Since</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="font-medium">Dr. Ramesh Kumar</td>
+          <td>CSE</td>
+          <td>3rd Sem — A</td>
+          <td>Data Structures</td>
+          <td class="text-slate-500">Jan 15, 2026</td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Remove</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">Dr. Ramesh Kumar</td>
+          <td>CSE</td>
+          <td>3rd Sem — B</td>
+          <td>Data Structures</td>
+          <td class="text-slate-500">Jan 15, 2026</td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Remove</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">Prof. Sunita Rao</td>
+          <td>CSE</td>
+          <td>5th Sem — A</td>
+          <td>DBMS</td>
+          <td class="text-slate-500">Jan 15, 2026</td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Remove</button></td>
+        </tr>
+        <tr>
+          <td class="font-medium">Prof. Anil Kumar</td>
+          <td>ISE</td>
+          <td>3rd Sem — A</td>
+          <td>Operating Systems</td>
+          <td class="text-slate-500">Jan 16, 2026</td>
+          <td><button class="btn-ghost text-sm px-2 py-1 rounded text-red-500">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 5: Faculty Dashboard ==================== -->
+<section id="screen-faculty-dashboard" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+    <span>Faculty</span> <span>/</span> <span class="text-slate-900">Dashboard</span>
+  </div>
+  <h1 class="text-3xl font-bold tracking-tight mb-2">Welcome, Dr. Ramesh Kumar</h1>
+  <p class="text-slate-500 mb-6">Department: CSE | Employee ID: <span class="font-mono">CEC-F-001</span></p>
+
+  <h2 class="text-xl font-semibold mb-4">My Sections</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer border-l-4 border-l-blue-500">
+      <h3 class="font-semibold text-lg mb-1">CSE — 3rd Sem A</h3>
+      <p class="text-sm text-slate-500 mb-3">Data Structures</p>
+      <div class="flex gap-3 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 64 students</span>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button class="btn btn-secondary text-xs py-1 px-2">
+          <i data-lucide="clipboard-list" class="w-3 h-3"></i> Attendance
+        </button>
+        <button class="btn btn-secondary text-xs py-1 px-2">
+          <i data-lucide="file-text" class="w-3 h-3"></i> Marks
+        </button>
+      </div>
+    </div>
+    <div class="card p-5 hover:shadow-md transition-shadow cursor-pointer border-l-4 border-l-blue-500">
+      <h3 class="font-semibold text-lg mb-1">CSE — 3rd Sem B</h3>
+      <p class="text-sm text-slate-500 mb-3">Data Structures</p>
+      <div class="flex gap-3 text-sm text-slate-600">
+        <span class="flex items-center gap-1"><i data-lucide="users" class="w-3.5 h-3.5"></i> 62 students</span>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button class="btn btn-secondary text-xs py-1 px-2">
+          <i data-lucide="clipboard-list" class="w-3 h-3"></i> Attendance
+        </button>
+        <button class="btn btn-secondary text-xs py-1 px-2">
+          <i data-lucide="file-text" class="w-3 h-3"></i> Marks
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+  <div class="flex gap-3">
+    <button class="btn btn-outline">
+      <i data-lucide="clipboard-list" class="w-4 h-4"></i> Mark Attendance
+    </button>
+    <button class="btn btn-outline">
+      <i data-lucide="file-text" class="w-4 h-4"></i> Enter Marks
+    </button>
+    <button class="btn btn-outline">
+      <i data-lucide="megaphone" class="w-4 h-4"></i> Post Announcement
+    </button>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 6: Student Dashboard ==================== -->
+<section id="screen-student-dashboard" class="screen p-6">
+  <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+    <span>Student</span> <span>/</span> <span class="text-slate-900">Dashboard</span>
+  </div>
+  <h1 class="text-3xl font-bold tracking-tight mb-2">Welcome, Rahul Sharma</h1>
+  <p class="text-slate-500 mb-6">USN: <span class="font-mono">1CG21CS001</span> | CSE | 3rd Semester | Section A | 2025-26</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+    <div class="card p-5 border-l-4 border-l-green-500">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
+          <i data-lucide="clipboard-list" class="w-5 h-5 text-green-600"></i>
+        </div>
+        <div class="stat-label">Attendance</div>
+      </div>
+      <div class="stat-value text-green-600">82%</div>
+      <div class="w-full bg-green-100 rounded-full h-2 mt-2">
+        <div class="bg-green-500 h-2 rounded-full" style="width: 82%"></div>
+      </div>
+      <div class="text-xs text-slate-500 mt-1">Min required: 75%</div>
+    </div>
+    <div class="card p-5 border-l-4 border-l-blue-500">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+          <i data-lucide="trophy" class="w-5 h-5 text-blue-600"></i>
+        </div>
+        <div class="stat-label">CGPA</div>
+      </div>
+      <div class="stat-value text-blue-600">8.4</div>
+      <div class="text-xs text-slate-500 mt-2">Last Sem SGPA: 8.6</div>
+    </div>
+    <div class="card p-5 border-l-4 border-l-amber-500">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
+          <i data-lucide="indian-rupee" class="w-5 h-5 text-amber-600"></i>
+        </div>
+        <div class="stat-label">Fees</div>
+      </div>
+      <div class="stat-value text-green-600">Paid</div>
+      <div class="text-xs text-slate-500 mt-2">Next due: Jul 2026</div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="card p-5">
+      <h2 class="text-lg font-semibold mb-4">Recent Announcements</h2>
+      <div class="space-y-3">
+        <div class="py-2 border-b border-slate-100">
+          <p class="text-sm font-medium">IA-1 Marks Released</p>
+          <p class="text-xs text-slate-500">Dr. Ramesh Kumar — 2 days ago</p>
+        </div>
+        <div class="py-2 border-b border-slate-100">
+          <p class="text-sm font-medium">Lab session rescheduled to Thursday</p>
+          <p class="text-xs text-slate-500">Prof. Sunita Rao — 5 days ago</p>
+        </div>
+        <div class="py-2">
+          <p class="text-sm font-medium">Semester fee deadline extended</p>
+          <p class="text-xs text-slate-500">Admin — 1 week ago</p>
+        </div>
+      </div>
+    </div>
+    <div class="card p-5">
+      <h2 class="text-lg font-semibold mb-4">Upcoming</h2>
+      <div class="space-y-3">
+        <div class="flex gap-3 py-2 border-b border-slate-100">
+          <div class="w-10 h-10 rounded-lg bg-red-50 flex flex-col items-center justify-center text-red-600">
+            <span class="text-xs font-bold">MAR</span>
+            <span class="text-sm font-bold">15</span>
+          </div>
+          <div>
+            <p class="text-sm font-medium">IA-2 Examination</p>
+            <p class="text-xs text-slate-500">Data Structures</p>
+          </div>
+        </div>
+        <div class="flex gap-3 py-2 border-b border-slate-100">
+          <div class="w-10 h-10 rounded-lg bg-blue-50 flex flex-col items-center justify-center text-blue-600">
+            <span class="text-xs font-bold">MAR</span>
+            <span class="text-sm font-bold">20</span>
+          </div>
+          <div>
+            <p class="text-sm font-medium">Lab Assignment Due</p>
+            <p class="text-xs text-slate-500">DBMS</p>
+          </div>
+        </div>
+        <div class="flex gap-3 py-2">
+          <div class="w-10 h-10 rounded-lg bg-green-50 flex flex-col items-center justify-center text-green-600">
+            <span class="text-xs font-bold">APR</span>
+            <span class="text-sm font-bold">01</span>
+          </div>
+          <div>
+            <p class="text-sm font-medium">Sports Day</p>
+            <p class="text-xs text-slate-500">College event</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SCREEN 7: 403 Forbidden ==================== -->
+<section id="screen-403" class="screen flex items-center justify-center" style="min-height: calc(100vh - 56px);">
+  <div class="text-center">
+    <h1 class="text-7xl font-bold text-red-500 mb-4">403</h1>
+    <h2 class="text-2xl font-semibold mb-2">Access Denied</h2>
+    <p class="text-slate-500 mb-6">You don't have permission to view this page.</p>
+    <button class="btn btn-primary" onclick="goToDashboard()">Go to Dashboard</button>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- ==================== MODALS ==================== -->
+
+<!-- Create User Modal -->
+<div id="createUserModal" class="modal-overlay" onclick="if(event.target===this)toggleModal('createUserModal')">
+  <div class="modal">
+    <div class="p-5 border-b flex items-center justify-between">
+      <h2 class="text-lg font-semibold">Create User</h2>
+      <button onclick="toggleModal('createUserModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Name</label>
+        <input class="input" placeholder="Full name">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+        <input class="input" type="email" placeholder="user@cec.edu.in">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+        <input class="input" type="password" placeholder="Min 8 chars, 1 upper, 1 lower, 1 digit">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Role</label>
+        <select class="input" id="createUserRole" onchange="toggleRoleFields()">
+          <option value="">Select role...</option>
+          <option value="admin">Admin</option>
+          <option value="faculty">Faculty</option>
+          <option value="student">Student</option>
+        </select>
+      </div>
+      <div id="studentFields" style="display:none;" class="space-y-4 pt-2 border-t border-dashed">
+        <p class="text-xs font-semibold text-slate-400 uppercase">Student Details</p>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">USN</label>
+          <input class="input" placeholder="e.g., 1CG21CS001">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Department</label>
+            <select class="input"><option>CSE</option><option>ISE</option><option>ECE</option><option>EEE</option><option>ME</option><option>CE</option><option>AIML</option><option>MBA</option></select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Section</label>
+            <select class="input"><option>3A</option><option>3B</option><option>5A</option><option>5B</option><option>7A</option><option>7B</option></select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Semester</label>
+            <select class="input"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Academic Year</label>
+            <input class="input" value="2025-26">
+          </div>
+        </div>
+      </div>
+      <div id="facultyFields" style="display:none;" class="space-y-4 pt-2 border-t border-dashed">
+        <p class="text-xs font-semibold text-slate-400 uppercase">Faculty Details</p>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Employee ID</label>
+          <input class="input" placeholder="e.g., CEC-F-004">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Department</label>
+          <select class="input"><option>CSE</option><option>ISE</option><option>ECE</option><option>EEE</option><option>ME</option><option>CE</option><option>AIML</option><option>MBA</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="p-5 border-t flex gap-2 justify-end">
+      <button class="btn btn-secondary" onclick="toggleModal('createUserModal')">Cancel</button>
+      <button class="btn btn-primary">Create User</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Import Modal -->
+<div id="importModal" class="modal-overlay" onclick="if(event.target===this)toggleModal('importModal')">
+  <div class="modal">
+    <div class="p-5 border-b flex items-center justify-between">
+      <h2 class="text-lg font-semibold">Bulk Import Students</h2>
+      <button onclick="toggleModal('importModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div class="bg-blue-50 border border-blue-200 text-blue-700 text-sm p-3 rounded-md">
+        Upload a CSV file with columns: <code class="bg-blue-100 px-1 rounded">name, email, usn, department_code, semester, section</code>
+      </div>
+      <div>
+        <button class="btn btn-outline text-sm mb-3">
+          <i data-lucide="download" class="w-4 h-4"></i> Download CSV Template
+        </button>
+      </div>
+      <div class="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center">
+        <i data-lucide="upload-cloud" class="w-10 h-10 text-slate-400 mx-auto mb-3"></i>
+        <p class="text-sm text-slate-600">Drag & drop CSV file here, or click to browse</p>
+        <p class="text-xs text-slate-400 mt-1">Max file size: 5MB</p>
+        <input type="file" class="hidden" accept=".csv">
+      </div>
+    </div>
+    <div class="p-5 border-t flex gap-2 justify-end">
+      <button class="btn btn-secondary" onclick="toggleModal('importModal')">Cancel</button>
+      <button class="btn btn-primary">Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- Create Department Modal -->
+<div id="createDeptModal" class="modal-overlay" onclick="if(event.target===this)toggleModal('createDeptModal')">
+  <div class="modal">
+    <div class="p-5 border-b flex items-center justify-between">
+      <h2 class="text-lg font-semibold">Create Department</h2>
+      <button onclick="toggleModal('createDeptModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Department Code</label>
+        <input class="input" placeholder="e.g., CSE (2-5 uppercase letters)" maxlength="5" style="text-transform: uppercase;">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Department Name</label>
+        <input class="input" placeholder="e.g., Computer Science and Engineering">
+      </div>
+    </div>
+    <div class="p-5 border-t flex gap-2 justify-end">
+      <button class="btn btn-secondary" onclick="toggleModal('createDeptModal')">Cancel</button>
+      <button class="btn btn-primary">Create Department</button>
+    </div>
+  </div>
+</div>
+
+<!-- Create Section Modal -->
+<div id="createSectionModal" class="modal-overlay" onclick="if(event.target===this)toggleModal('createSectionModal')">
+  <div class="modal">
+    <div class="p-5 border-b flex items-center justify-between">
+      <h2 class="text-lg font-semibold">Add Section to CSE</h2>
+      <button onclick="toggleModal('createSectionModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Section Name</label>
+        <input class="input" placeholder="e.g., A, B, C">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Semester</label>
+        <select class="input"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Academic Year</label>
+        <input class="input" value="2025-26">
+      </div>
+    </div>
+    <div class="p-5 border-t flex gap-2 justify-end">
+      <button class="btn btn-secondary" onclick="toggleModal('createSectionModal')">Cancel</button>
+      <button class="btn btn-primary">Add Section</button>
+    </div>
+  </div>
+</div>
+
+<!-- Create Assignment Modal -->
+<div id="createAssignmentModal" class="modal-overlay" onclick="if(event.target===this)toggleModal('createAssignmentModal')">
+  <div class="modal">
+    <div class="p-5 border-b flex items-center justify-between">
+      <h2 class="text-lg font-semibold">New Faculty Assignment</h2>
+      <button onclick="toggleModal('createAssignmentModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Faculty Member</label>
+        <select class="input">
+          <option>Select faculty...</option>
+          <option>Dr. Ramesh Kumar (CSE)</option>
+          <option>Prof. Sunita Rao (CSE)</option>
+          <option>Prof. Anil Kumar (ISE)</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Department</label>
+        <select class="input"><option>CSE</option><option>ISE</option><option>ECE</option><option>EEE</option><option>ME</option><option>CE</option><option>AIML</option><option>MBA</option></select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Section</label>
+        <select class="input"><option>3rd Sem — A</option><option>3rd Sem — B</option><option>5th Sem — A</option><option>5th Sem — B</option><option>7th Sem — A</option><option>7th Sem — B</option></select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Subject</label>
+        <input class="input" placeholder="e.g., Data Structures">
+      </div>
+    </div>
+    <div class="p-5 border-t flex gap-2 justify-end">
+      <button class="btn btn-secondary" onclick="toggleModal('createAssignmentModal')">Cancel</button>
+      <button class="btn btn-primary">Create Assignment</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+  let currentRole = null;
+
+  function showRole(role) {
+    currentRole = role;
+    document.getElementById('screen-login').style.display = 'none';
+    document.getElementById('appShell').style.display = 'block';
+
+    // Hide all role navs
+    document.getElementById('nav-admin').style.display = 'none';
+    document.getElementById('nav-faculty').style.display = 'none';
+    document.getElementById('nav-student').style.display = 'none';
+
+    // Update header based on role
+    const headerName = document.getElementById('headerUserName');
+    const headerBadge = document.getElementById('headerRoleBadge');
+    const headerAvatar = document.getElementById('headerAvatar');
+    const sidebarName = document.getElementById('sidebarUserName');
+    const sidebarEmail = document.getElementById('sidebarUserEmail');
+
+    if (role === 'admin') {
+      document.getElementById('nav-admin').style.display = 'block';
+      headerName.textContent = 'CEC Admin';
+      headerBadge.className = 'badge badge-admin text-xs';
+      headerBadge.textContent = 'Admin';
+      headerAvatar.className = 'w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-sm font-semibold text-white';
+      headerAvatar.textContent = 'CA';
+      sidebarName.textContent = 'CEC Admin';
+      sidebarEmail.textContent = 'admin@cec.edu.in';
+      showScreen('admin-dashboard');
+    } else if (role === 'faculty') {
+      document.getElementById('nav-faculty').style.display = 'block';
+      headerName.textContent = 'Dr. Ramesh Kumar';
+      headerBadge.className = 'badge badge-faculty text-xs';
+      headerBadge.textContent = 'Faculty';
+      headerAvatar.className = 'w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-sm font-semibold text-white';
+      headerAvatar.textContent = 'RK';
+      sidebarName.textContent = 'Dr. Ramesh Kumar';
+      sidebarEmail.textContent = 'ramesh@cec.edu.in';
+      showScreen('faculty-dashboard');
+    } else if (role === 'student') {
+      document.getElementById('nav-student').style.display = 'block';
+      headerName.textContent = 'Rahul Sharma';
+      headerBadge.className = 'badge badge-student text-xs';
+      headerBadge.textContent = 'Student';
+      headerAvatar.className = 'w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-sm font-semibold text-white';
+      headerAvatar.textContent = 'RS';
+      sidebarName.textContent = 'Rahul Sharma';
+      sidebarEmail.textContent = 'rahul@cec.edu.in';
+      showScreen('student-dashboard');
+    }
+
+    lucide.createIcons();
+  }
+
+  function logout() {
+    document.getElementById('appShell').style.display = 'none';
+    document.getElementById('screen-login').classList.add('active');
+    document.getElementById('screen-login').style.display = '';
+    currentRole = null;
+    lucide.createIcons();
+  }
+
+  function showScreen(screenId) {
+    // Hide all screens
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    // Show target
+    const target = document.getElementById('screen-' + screenId);
+    if (target) target.classList.add('active');
+    // Update nav active state
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('[data-screen="' + screenId + '"]').forEach(n => n.classList.add('active'));
+    lucide.createIcons();
+  }
+
+  function goToDashboard() {
+    if (currentRole === 'admin') showScreen('admin-dashboard');
+    else if (currentRole === 'faculty') showScreen('faculty-dashboard');
+    else if (currentRole === 'student') showScreen('student-dashboard');
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  function toggleModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.toggle('open');
+  }
+
+  function toggleRoleFields() {
+    const role = document.getElementById('createUserRole').value;
+    document.getElementById('studentFields').style.display = role === 'student' ? 'block' : 'none';
+    document.getElementById('facultyFields').style.display = role === 'faculty' ? 'block' : 'none';
+  }
+
+  // Initialize icons
+  document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+  });
+</script>
+
+</body>
+</html>
